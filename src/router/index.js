@@ -15,6 +15,7 @@ import user_main from '@/components/user/main.vue'
 import user_data from '@/components/user/data.vue'
 import user_canvas from '@/components/user/canvas.vue'
 import user_alarm from '@/components/user/alarm.vue'
+import user_login from '@/components/user/login.vue'
 
 
 Vue.use(Router)
@@ -52,7 +53,7 @@ export default new Router({
     {
       path: '/user',
       name: 'user',
-      component: admin,
+      component: user,
       children: [{
         path: '/user/main',
         name: 'user_main',
@@ -73,6 +74,10 @@ export default new Router({
         path: '/user/canvas',
         name: 'user_canvas',
         component: user_canvas
+      },{
+        path: '/user/login',
+        name: 'user_login',
+        component: user_login
       }]
     }
   ]

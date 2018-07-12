@@ -1,32 +1,16 @@
 <template>
   <div class="index">
-    <div class="top">
-      <h3>舜禹水务后台管理系统</h3>
-    </div>
-    <div class="container">
-      <div class="left">
-        <el-menu
-          border
-          default-active="1"
-          class="el-menu-vertical-demo">
-          <el-menu-item :index="index+1+''" v-for="item,index in data" @click="clickDocker(item)">
-            <!-- <i class="el-icon-menu"></i> -->
-            <span slot="title">{{item[0]}}</span>
-          </el-menu-item>
-        </el-menu>
-      </div>
-      <div class="title">
-        <span>{{data[title][0]}}</span>
-      </div>
+      <v-header></v-header>
       <div class="right">
         <router-view/>
       </div>
-    </div>
+      <v-footer class="footer"></v-footer>
   </div>
 </template>
 
 <script>
-
+import header from '../common/header'
+import footer from '../common/footer'
 export default {
   name: 'app',
   data () {
@@ -57,6 +41,10 @@ export default {
         }
       })
     }
+  },
+  components: {
+    'v-header': header,
+    'v-footer': footer
   }
 }
 </script>
@@ -114,5 +102,9 @@ thead {
 }
 .el-table{
   color: #000000 !important;
+}
+.footer {
+  position: fixed;
+  bottom: 0px;
 }
 </style>
