@@ -796,7 +796,7 @@ export default {
   margin-bottom: 20px;
 }
 .loc-list {
-  height: 26px;
+  /* height: 26px; */
   /* color: white; */
   padding:10px;
   background-color: #00CCFF;
@@ -881,7 +881,7 @@ export default {
   width: 70px;
 }
 .loc-tit {
-  height: 30px;
+  /* height: 30px; */
   padding: 10px;
   border-bottom: 1px solid #E0E0E0;
   margin-bottom: 10px;

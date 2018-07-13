@@ -5,6 +5,10 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import MuseUI from 'muse-ui';
+import 'muse-ui/dist/muse-ui.css';
+
+
 import axios from 'element-ui'
 import Vuex from 'vuex'
 import global from './global/global.js'
@@ -13,10 +17,11 @@ import AMap from 'vue-amap'
 Vue.config.productionTip = false
 
 Vue.prototype.$global = global
+
 Vue.use(ElementUI)
 Vue.use(axios)
 Vue.use(Vuex)
-
+Vue.use(MuseUI);
 Vue.use(AMap)
 AMap.initAMapApiLoader({
   key: '28966b6be8e4fa0e4c4f4c9b4bf8d3ce',

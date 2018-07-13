@@ -256,7 +256,6 @@ export default {
       this.$global.httpGetWithToken(this,'sensor/point/all').then(res=>{
         console.log(res)
         this.pointList = res.data.data
-
       })
     },
     //TODO pointAdd 里面的alarm 记得要去掉id，要么就默认给加上了。

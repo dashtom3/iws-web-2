@@ -1,5 +1,5 @@
 <template>
-  <div class="head">
+  <div class="vhead">
     <div class="headCon">
       <div class="headLeft">
         <span>欢迎来到舜禹水务</span>
@@ -19,7 +19,7 @@
 <script>
 import global from '../../global/global'
 export default {
-  name: 'head',
+  name: 'vhead',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
@@ -48,7 +48,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.head{
+.vhead{
   background-color: rgb( 0, 0, 0 );
   height: 40px;
   line-height: 40px;

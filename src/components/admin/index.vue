@@ -31,7 +31,7 @@ export default {
   name: 'app',
   data () {
     return {
-      data:[['用户管理','admin_user'],['角色管理','admin_role'],['系统管理','admin_system'],['点表管理','admin_point'],['用户管理','admin_user'],['用户管理','admin_user'],['用户管理','admin_user']],
+      data:[['用户管理','admin_user'],['角色管理','admin_role'],['系统管理','admin_system'],['点表管理','admin_point'],['签到管理','admin_user'],['用户管理','admin_user'],['用户管理','admin_user']],
       title:0,
     }
   },

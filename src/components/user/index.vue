@@ -1,10 +1,22 @@
 <template>
-  <div class="index">
+  <div class="hello">
       <v-header></v-header>
-      <div class="right">
-        <router-view/>
+      <div class="index">
+        <div class="indexHeader">
+          <div class="indexLog">
+            <a href="/index"><img src="../../assets/logo.png" alt=""></a>
+          </div>
+          <div class="indexNav">
+            <el-menu :default-active="activeIndex" class="el-menu-demo navbar" mode="horizontal" router>
+              <el-menu-item v-for="item in data" :index="item[1]">{{item[0]}}</el-menu-item>
+            </el-menu>
+          </div>
+        </div>
+        <div class="main-view">
+          <router-view></router-view>
+        </div>
       </div>
-      <v-footer class="footer"></v-footer>
+      <v-footer class="vfooter"></v-footer>
   </div>
 </template>
 
@@ -15,32 +27,19 @@ export default {
   name: 'app',
   data () {
     return {
-      data:[['用户管理','admin_user'],['角色管理','admin_role'],['系统管理','admin_system'],['点表管理','admin_point'],['用户管理','admin_user'],['用户管理','admin_user'],['用户管理','admin_user']],
-      title:0,
+      activeIndex: this.$route.path,
+      data:[['首页','/user/main'],['数据查看','/user/data'],['报警信息','/user/alarm'],['视频监控','/user/video'],['个人中心','/user/user']]
     }
   },
-  watch: {
-    '$route': function () {
-      // this.pathName = this.$route.name
-      this.setDocker()
-    }
-  },
+
   created(){
-    // this.$router.push({name:this.data[0][1]})
-    this.setDocker()
+    var self = this
+    this.$nextTick(function () {
+      self.activeIndex = self.$route.path
+    })
   },
   methods: {
-    clickDocker(val){
-      console.log(val)
-      this.$router.push({name:val[1]})
-    },
-    setDocker(){
-      this.data.forEach((item,index)=>{
-        if(item[1] == this.$route.name){
-          this.title = index
-        }
-      })
-    }
+
   },
   components: {
     'v-header': header,
@@ -50,61 +49,64 @@ export default {
 </script>
 
 <style>
-body {
-  background-color: #F0F0F0;
+.hello {
+  width: 100%;
 }
-.container {
-  width: 1200px;
-  margin:0px auto;
-  position:absolute;
-  bottom:10px;
-  top: 60px;
-  left: 50%;
-  margin-left: -600px;
+.indexHeader{
+  width:100%;
+  height: 71px;
+  margin: 0 auto 10px;
+  background-color: white;
+  border-bottom: 1px solid #e6e6e6;
 }
-.left {
-  margin: 10px;
-  width:200px;
-  border:1px solid #E0E0E0;
+.indexLog{
+  float: left;
+  margin-left: 20px;
+}
+.indexLog img {
+  height: 60px;
+}
+.leftNav{
+  width: 320px;
+  margin-right: 10px;
   float: left;
 }
-.top {
+.navbar{
+  background-color: #fff!important;
+  float: right;
+  height: 71px;
+  line-height: 71px;
+}
+.navbar li{
+  float: right;
+  font-size: 18px;
+  width: 120px;
+  text-align: center;
+  margin:0 40px;
+}
+.navbar li:hover{
+  cursor: pointer;
+}
+.navbar li.active{
+  color: rgb(20,135,202);
+  border-bottom: 4px solid;
+}
+.el-menu--horizontal .el-menu-item{
+  height: 71px!important;
+  line-height: 71px!important;
+}
+.el-menu-item.is-active{
+  border-bottom: 4px solid rgb( 20, 135, 202 );
+  color:rgb(20,135,202);
+}
+.el-menu-item:hover{
+  border-bottom: 4px solid rgb( 20, 135, 202 )!important;
+  background-color: none!important;
+}
+.main-view {
+  position:absolute;
   width: 100%;
-  height: 60px;
-  background-color: #3488FF;
-  text-align: left;
-}
-.top h3 {
-  color: white;
-  padding-left: 10px;
-  padding-top: 10px;
-  /* padding-bottom: 10px; */
-}
-.title {
-  padding-top: 20px;
-  text-align: left;
-  margin-left: 230px;
-  height: 40px;
-}
-.title span{
-  font-size: 24px;
-}
-.right {
-  min-height: 90%;
-  width: 900px;
-  margin-top: 10px;
-  float:left;
-  background-color: #fff;
-  position: relative;
-}
-thead {
-  color: #000000 !important;
-}
-.el-table{
-  color: #000000 !important;
-}
-.footer {
-  position: fixed;
-  bottom: 0px;
+  top:110px;
+  bottom:40px;
 }
 </style>

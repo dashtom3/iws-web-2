@@ -1,5 +1,5 @@
 <template>
-  <div class="footer">
+  <div class="vfooter">
     <div class="footerCon">
       <span>Copyright&copy;2013-2014安徽舜禹水务股份有限公司版权所有</span>
       <span style="margin:0 50px;">皖ICP备10202683号</span>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'footer',
+  name: 'vfooter',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -21,14 +21,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.footer{
+.vfooter{
+  position:fixed;
+  bottom:0px;
   background: #000;
   height: 40px;
   line-height: 40px;
   width: 100%;
 }
 .footerCon{
-  width: 1280px;
+  /* width: 1280px; */
   margin: 0 auto;
   text-align: center;
 }
