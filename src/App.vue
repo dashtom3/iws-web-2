@@ -23,4 +23,7 @@ export default {
   /* position:relative; */
 }
 * { padding: 0; margin: 0; outline: 0; }
+body {
+  background-color: #e6e6e6;
+}
 </style>

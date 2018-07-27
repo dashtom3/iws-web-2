@@ -328,7 +328,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .content {
   text-align: left;
   padding:5px;

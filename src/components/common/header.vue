@@ -5,19 +5,15 @@
         <span>欢迎来到舜禹水务</span>
       </div>
       <div class="headRight">
-        <span v-if="isShow"><a href="/login">登录</a></span>
-        <span v-if="isShow"><a href="javascript:;">|</a></span>
-        <span v-if="isShow"><a href="/register">注册</a></span>
-        <span v-if="isLogin" class="use">{{username}}</span>
-        <span v-if="isLogin" class="use" v-on:click="exit">退出</span>
-        <span><a href="/aboutUs" class="about">关于我们</a></span>
+        <span v-if="isLogin" class="use">您好,{{username}}</span>
+        <span v-if="isLogin" class="use" @click="exit">退出</span>
+        <span class="about" @click="goToAboutUs" >关于我们 </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import global from '../../global/global'
 export default {
   name: 'vhead',
   data () {
@@ -28,10 +24,10 @@ export default {
     }
   },
   created () {
-    if (global.getToken()) {
+    if (this.$global.getToken()) {
       this.isShow = false
       this.isLogin = true
-      this.username = global.getUser().username
+      this.username = this.$global.getUser().username
     } else {
       this.isShow = true
       this.isLogin = false
@@ -39,8 +35,10 @@ export default {
   },
   methods: {
     exit () {
-      global.setToken('')
-      global.success(this, '退出成功', '/login')
+      this.$global.success(this, '退出成功', '/login')
+    },
+    goToAboutUs(){
+      this.$router.push({name:'user_about'})
     }
   }
 }
@@ -49,10 +47,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .vhead{
-  background-color: rgb( 0, 0, 0 );
+  /* background-color: rgb( 0, 0, 0 ); */
+  background-color: #283040;
   height: 40px;
   line-height: 40px;
-  width: 100%;
+  min-width: 100%;
 }
 .headCon{
   width: 100%;
@@ -74,6 +73,8 @@ export default {
 }
 .about{
   margin-left: 50px;
+  color: #fff;
+  cursor: pointer;
 }
 .use{
   color: #fff;

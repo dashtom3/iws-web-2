@@ -1,38 +1,19 @@
 <template>
   <div class="login">
     <div class="loginCon" ref="contentHeight">
-      <div class="h75"></div>
+      <div class="h75">
+
+      </div>
       <div class="loginMsg" v-show="msgLogin">
         <div class="w361">
-          <div class="msgTitle"></div>
-          <span class="w361_1">帐号</span>
+          <div class="msgTitle">
+            <h3>舜禹水务后台管理系统</h3>
+          </div>
+          <span class="w361_1">管理员帐号</span>
           <el-input v-model="userLoginMsg.username" placeholder="请输入账号"></el-input>
           <span class="w361_1">密码</span>
           <el-input v-model="userLoginMsg.password" placeholder="请输入密码" type="password" v-on:keyup.enter.native="login"></el-input>
-          <span class="goPhone"><a  v-on:click="goPhoneLogin" href="javascript:;">修改密码</a></span>
-          <el-button type="primary" style="width:100%" v-on:click="login">登录</el-button>
-          <span class="goRegister"><a href="javascript:;" v-on:click="goRegister">注册</a></span>
-        </div>
-      </div>
-      <div class="editloginMsg" v-show="phoneLogin">
-         <div class="editdialog">
-          <div class="editlogo"></div>
-          <el-form :label-position="labelPosition" label-width="80px" :rules="rules" ref="editMsg" :model="editMsg">
-            <el-form-item label="用户名" prop="username">
-              <el-input v-model="editMsg.username"></el-input>
-            </el-form-item>
-            <el-form-item label="原密码" prop="oldpassword">
-              <el-input v-model="editMsg.oldpassword"  placeholder="请输入验证码"></el-input>
-            </el-form-item>
-            <el-form-item label="新密码" prop="password">
-              <el-input v-model="editMsg.password" type="password"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="repassword">
-              <el-input v-model="editMsg.repassword" type="password"></el-input>
-            </el-form-item>
-            <el-button type="primary" class="phoneLog" v-on:click="forgetPwd('editMsg')">确认</el-button>
-            <!-- <p class="goRegister"><a href="javascript:;" v-on:click="goRegister">注册</a></p> -->
-          </el-form>
+          <el-button type="primary" style="width:100%;" v-on:click="login" class="login-btn">登录</el-button>
         </div>
       </div>
     </div>
@@ -116,7 +97,7 @@ export default {
         // console.log(res)
         this.$global.setUser(res.data)
         // console.log(this.$global.getUser(),this.$global.getToken())
-        this.$global.success(this,'登录成功',{name:'user_main'})
+        this.$global.success(this,'登录成功',{name:'admin_user'})
       })
     },
     // 忘记密码
@@ -134,7 +115,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .el-form-item{
     margin: 0;
 }
@@ -147,8 +128,7 @@ export default {
 }
 
 .loginCon{
-  background: url('../../assets/loginbg.png') no-repeat;
-  background-size: cover;
+  background-color: #3488FF;
   padding-top: 50px;
   /* padding-bottom: 20px; */
   height: 100%;
@@ -159,7 +139,7 @@ export default {
 }
 .loginMsg{
   width: 500px;
-  height: 600px;
+  height: 500px;
   border-radius: 12px;
   background-color: rgb( 255, 255, 255 );
   opacity: 0.902;
@@ -185,10 +165,11 @@ export default {
   padding-top: 50px
 }
 .msgTitle{
-  background: url('../../assets/loginTitle_03.png') no-repeat;
+  /* background: url('../../assets/loginTitle_03.png') no-repeat; */
   width: 288px;
-  height: 124px;
+  height: 60px;
   margin: 0px auto;
+  text-align: center;
 }
 .editlogo{
   background: url('../../assets/loginTitle_03.png') no-repeat;
@@ -196,13 +177,12 @@ export default {
   height: 124px;
   margin: 0px auto;
 }
-.w361>span{
-  display: block;
-  margin: 20px 0 10px;
-  font-size: 14px;
-}
+
 .w361_1{
     float: left;
+    display: block;
+    margin: 20px 0 10px;
+    font-size: 14px;
 }
 .goPhone{
   text-align: right;
@@ -220,5 +200,8 @@ phoneLogButton{
 }
 a{
   color:#000;
+}
+.login-btn {
+  margin-top: 30px;
 }
 </style>

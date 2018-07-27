@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<body>
+  <div id="playercontainer"></div>
+  <script type="text/javascript" src="./player/cyberplayer.js"></script>
+  <script type="text/javascript">
+      console.log(window)
+      var player = cyberplayer("playercontainer").setup({
+          width: 300,
+          height: 300,
+          title: "flv点播",
+          file: "http://61.190.61.78:16000/mag/hls/"+window.frameElement.id+"/1/live.m3u8", // hls播放地址（×一定要支持跨域访问，否则要设置primary参数）
+          // file: "http://10.0.0.30:6713/mag/hls/d497f312541d4182bd03052cd74fd8d4/1/live.m3u8", // hls播放地址（×一定要支持跨域访问，否则要设置primary参数）
+          image: "http://gcqq450f71eywn6bv7u.exp.bcevod.com/mda-hiup6h1qdymgf3fe/mda-hiup6h1qdymgf3fe.jpg", // 视频截图
+          autostart: true,
+          stretching: "uniform",
+          repeat: true,
+          volume: 100,
+          controls: true,
+          starttime: 0,
+          // primary: "flash", // 强制使用flash来播放，不设置的话则默认高优使用H5进行播放
+          ak: "2290f22698af41bbb92f6f17e887b113"
+      });
+  </script>
+</body>
+</html>

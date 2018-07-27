@@ -18,14 +18,14 @@
             <el-button type="primary" class="phoneLog" v-on:click="nextStep('registerMsg')">下一步</el-button>
           </el-form>
           <el-form :label-position="labelPosition" label-width="80px" :rules="rules" :model="registerMsg" v-show="next">
+            <el-form-item label="真实姓名">
+              <el-input v-model="registerMsg.realName"></el-input>
+            </el-form-item>
             <el-form-item label="手机号码">
               <el-input v-model="registerMsg.phone"></el-input>
             </el-form-item>
             <el-form-item label="地址">
               <el-input v-model="registerMsg.address"></el-input>
-            </el-form-item>
-            <el-form-item label="描述">
-              <el-input v-model="registerMsg.describe"></el-input>
             </el-form-item>
             <el-button type="primary" class="registerbutton" style="width:100%" @click="register">注册</el-button>
             <p class="goRegister"><a href="javascript:;" v-on:click="goLogin">登录</a></p>
@@ -87,7 +87,7 @@ export default {
         repassword: '',
         phone:'',
         address:'',
-        describe:''
+        realName:''
       },
       rules: {
         username: [{ validator: username, trigger: 'blur' }],
@@ -101,14 +101,14 @@ export default {
 
   },
   methods: {
-    goRegister: function () {
-      this.$router.push('/user/register')
-    },
     register(){
-
+      this.$global.httpPost(this,'user/register',this.registerMsg).then(res=>{
+        console.log(res)
+        this.$global.success(this,'注册成功',{name:'login'})
+      })
     },
     goLogin(){
-
+      this.$router.push({name:'login'})
     },
     // 注册下一步
     nextStep (formName) {
@@ -116,6 +116,7 @@ export default {
         if (valid) {
           this.prev = false
           this.next = true
+
         } else {
           return false
         }

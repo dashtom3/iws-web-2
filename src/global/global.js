@@ -1,6 +1,7 @@
 import axios from 'axios'
 export default{
-  baseUrl: 'http://218.23.124.104:6784/',
+  // baseUrl: 'http://218.23.124.104:6784/',
+  baseUrl: 'http://localhost:6784/',
   success (obj, msg, url) {
     obj.$message({
       message: msg,
@@ -129,21 +130,17 @@ export default{
     })
   },
   getToken: function () {
-    var date = localStorage.getItem('cygtokentime')
-    if (new Date().getTime() - date > 3600000) {
-      return null
-    }
-    return localStorage.getItem('cygtoken')
+    return localStorage.getItem('syswtoken')
   },
   setToken: function (token) {
-    localStorage.setItem('cygtoken', token)
-    localStorage.setItem('cygtokentime', new Date().getTime())
+    localStorage.setItem('syswtoken', token)
   },
   getUser: function () {
-    return JSON.parse(localStorage.getItem('cyguser'))
+    return JSON.parse(localStorage.getItem('syswuser'))
   },
   setUser: function (caruser) {
-    localStorage.setItem('cyguser', JSON.stringify(caruser))
+    localStorage.setItem('syswuser', JSON.stringify(caruser))
+    this.setToken(caruser.token)
   },
   logout: function () {
     localStorage.removeItem('cyguser')

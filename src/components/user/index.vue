@@ -16,7 +16,7 @@
           <router-view></router-view>
         </div>
       </div>
-      <v-footer class="vfooter"></v-footer>
+      <!-- <v-footer class="vfooter"></v-footer> -->
   </div>
 </template>
 
@@ -28,7 +28,7 @@ export default {
   data () {
     return {
       activeIndex: this.$route.path,
-      data:[['首页','/user/main'],['数据查看','/user/data'],['报警信息','/user/alarm'],['视频监控','/user/video'],['个人中心','/user/user']]
+      data:[['个人中心','/user/user'],['视频监控','/user/video'],['报警信息','/user/alarm'],['数据查看','/user/data'],['首页','/user/main']]
     }
   },
 
@@ -37,9 +37,15 @@ export default {
     this.$nextTick(function () {
       self.activeIndex = self.$route.path
     })
+    this.getUserInfo()
   },
   methods: {
-
+    getUserInfo(){
+      this.user = this.$global.getUser()
+      if(!this.user){
+        this.$global.error(this,'权限不足','/login')
+      }
+    },
   },
   components: {
     'v-header': header,
@@ -48,15 +54,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .hello {
   width: 100%;
 }
 .indexHeader{
   width:100%;
   height: 71px;
-  margin: 0 auto 10px;
+  /* margin: 0 auto 10px; */
   background-color: white;
+  /* background-color: #283040; */
   border-bottom: 1px solid #e6e6e6;
 }
 .indexLog{
@@ -72,7 +79,9 @@ export default {
   float: left;
 }
 .navbar{
-  background-color: #fff!important;
+  /* background-color: #fff!important; */
+  /* background-color: #283040 !important; */
+  background-color: transparent;
   float: right;
   height: 71px;
   line-height: 71px;
@@ -91,22 +100,26 @@ export default {
   color: rgb(20,135,202);
   border-bottom: 4px solid;
 }
-.el-menu--horizontal .el-menu-item{
+.indexNav .el-menu--horizontal .el-menu-item{
   height: 71px!important;
   line-height: 71px!important;
 }
-.el-menu-item.is-active{
+.indexNav .el-menu-item.is-active{
   border-bottom: 4px solid rgb( 20, 135, 202 );
   color:rgb(20,135,202);
 }
-.el-menu-item:hover{
+.indexNav .el-menu-item:hover{
   border-bottom: 4px solid rgb( 20, 135, 202 )!important;
   background-color: none!important;
 }
 .main-view {
   position:absolute;
   width: 100%;
-  top:110px;
-  bottom:40px;
+  top:111px;
+  bottom:0px;
+  background-color: #e6e6e6;
 }
+/* .main-view {
+  min-height: 100%;
+} */
 </style>

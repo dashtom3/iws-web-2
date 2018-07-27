@@ -6,16 +6,18 @@
         <div class="btn-role">
           <el-button @click="dialogAddSys" type="primary" round>添加系统</el-button>
         </div>
-        <div v-for="item in sysList" class="sys" @click="goToSysDetail(item)">
-          <div class="systemImg">
-            <img v-bind:src="item.pic | imageSrc" alt="">
-          </div>
-          <div class="systemIntr">
-            <p class="systemTitle">{{item.name}}</p>
-            <p class="systemCreat">创建于{{item.create_time}}</p>
-          </div>
-          <div class="delicon" v-on:click="dialogDeleteSys(item)">
-            <img src="../../assets/del.png">
+        <div>
+          <div v-for="item in sysList" class="sys" @click="goToSysDetail(item)">
+            <div class="systemImg">
+              <img v-bind:src="item.pic | imageSrc" alt="">
+            </div>
+            <div class="systemIntr">
+              <p class="systemTitle">{{item.name}}</p>
+              <p class="systemCreat">创建于{{item.create_time}}</p>
+            </div>
+            <div class="delicon" v-on:click="dialogDeleteSys(item)">
+              <img src="../../assets/del.png">
+            </div>
           </div>
         </div>
       </div>
@@ -494,7 +496,7 @@ export default {
       }
     },
     getSysList(){
-      this.$global.httpGet(this,'system/system/all').then(res=>{
+      this.$global.httpGetWithToken(this,'system/system/all?hasPoint=1').then(res=>{
         this.sysList = res.data.data
         if(this.sysDetail){
             this.sysList.forEach((item)=>{
@@ -732,7 +734,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .btm {
   position: absolute;
   right: 10px;

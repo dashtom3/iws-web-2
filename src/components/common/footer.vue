@@ -24,7 +24,8 @@ export default {
 .vfooter{
   position:fixed;
   bottom:0px;
-  background: #000;
+  /* background: #000; */
+  background-color: #283040;
   height: 40px;
   line-height: 40px;
   width: 100%;
