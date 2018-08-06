@@ -12,7 +12,7 @@
         value-format="yyyy-MM-dd"
         @change="timeChange">
       </el-date-picker>
-      <el-button @click="exportData" class="sign-button" primary>导出数据</el-button>
+      <!-- <el-button @click="exportData" class="sign-button" primary>导出数据</el-button> -->
     </div>
     <div class="content">
       <el-table

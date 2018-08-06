@@ -65,6 +65,7 @@ export default {
   background-color: white;
   /* background-color: #283040; */
   border-bottom: 1px solid #e6e6e6;
+  min-width: 1150px;
 }
 .indexLog{
   float: left;
@@ -115,6 +116,7 @@ export default {
 .main-view {
   position:absolute;
   width: 100%;
+  min-width: 1150px;
   top:111px;
   bottom:0px;
   background-color: #e6e6e6;

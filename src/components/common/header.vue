@@ -51,7 +51,7 @@ export default {
   background-color: #283040;
   height: 40px;
   line-height: 40px;
-  min-width: 100%;
+  min-width: 1150px;
 }
 .headCon{
   width: 100%;

@@ -5,8 +5,8 @@
         <el-tree :data="treeData" default-expand-all :props="defaultProps" @node-click="handleNodeClick"></el-tree>
       </div>
       <div class="main-left-show">
-        <img src="../../assets/main_show.png" @click="showLeft" v-if="leftShow != true">
-        <img src="../../assets/main_hide.png" @click="showLeft" v-else>
+        <img src="../../assets/main_show.png" @click="showLeft">
+        <!-- <img src="../../assets/main_hide.png" @click="showLeft" v-else> -->
       </div>
     </div>
     <div class="main-right">
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     getSystemList(){
-      this.$global.httpGet(this,'system/system/all').then(res=>{
+      this.$global.httpGetWithToken(this,'system/system/allByRole').then(res=>{
         console.log(res)
         this.sysList = res.data.data
         this.addMarker()
@@ -219,6 +219,7 @@ export default {
   top: 50%;
   z-index:99;
   cursor: pointer;
+  margin-left: 5px;
 }
 .main-left .el-tree-node__content {
   border-bottom:1px solid #cccccc;
@@ -229,10 +230,10 @@ export default {
 .main-left .el-tree-node__content {
 }
 .main-left .el-tree-node:focus>.el-tree-node__content{
-  background-color: #32ABEE;
+  background-color: #32ABEE ;
 }
 .main-left .el-tree-node__content:hover{
-  background-color: #32ABEE;
+  background-color: #32ABEE ;
 }
 .main-left::-webkit-scrollbar {
     width:0px;

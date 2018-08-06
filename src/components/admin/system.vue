@@ -256,7 +256,7 @@
         </el-form-item>
         <el-form-item v-for="item,index in deviceUpdate.sensor">
           <span>点表</span>
-          <el-select v-model="item.point">
+          <el-select v-model="item.point" @change="changeSensorPoint(item)">
             <el-option :label="point.name" :value="point._id" :key="point._id" v-for="point in pointList"></el-option>
           </el-select>
           <span>站号/端口号</span>
@@ -496,7 +496,7 @@ export default {
       }
     },
     getSysList(){
-      this.$global.httpGetWithToken(this,'system/system/all?hasPoint=1').then(res=>{
+      this.$global.httpGetWithToken(this,'system/system/all',{hasPoint:1}).then(res=>{
         this.sysList = res.data.data
         if(this.sysDetail){
             this.sysList.forEach((item)=>{
@@ -637,8 +637,8 @@ export default {
         item.point = item.point._id
       })
 
-      this.deviceUpdate.ip = this.deviceUpdate.sensor[0].ip
-      this.transfer_type = this.deviceUpdate.sensor[0].transfer_type == 0?'Modbus':'TCP S7'
+      this.deviceUpdate.ip = this.deviceUpdate.sensor[0] == null? "":this.deviceUpdate.sensor[0].ip
+      this.transfer_type = this.deviceUpdate.sensor[0] == null? 'Modbus':(this.deviceUpdate.sensor[0].transfer_type == 0?'Modbus':'TCP S7')
       this.isDeviceUpdate = !this.isDeviceUpdate
     },
     dialogDeleteDevice(item){
@@ -664,7 +664,7 @@ export default {
     },
     updateDevice(){
       this.deviceUpdate.transfer_type = this.transfer_type == 'Modbus'? 0:1
-      // console.log(this.deviceUpdate)
+      console.log(this.deviceUpdate)
       this.$global.httpPostWithToken(this,'system/device/update',this.deviceUpdate).then((res)=>{
         this.$global.success(this,'修改成功','')
         this.isDeviceUpdate = !this.isDeviceUpdate
@@ -721,6 +721,7 @@ export default {
       console.log(this.deviceUpdate)
     },
     showSensor(sensor){
+      console.log(sensor)
       this.isSensorDetail = !this.isSensorDetail
       this.sensorDetail = sensor
     },

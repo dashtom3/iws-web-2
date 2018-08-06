@@ -26,4 +26,18 @@ export default {
 body {
   background-color: #e6e6e6;
 }
+.el-tree-node__content {
+  border-bottom:1px solid #cccccc;
+  height: 34px;
+  background-color: #283040;
+  color:#ffffff;
+}
+.el-tree-node__content {
+}
+.el-tree-node:focus>.el-tree-node__content{
+  background-color: #32ABEE !important;
+}
+.el-tree-node__content:hover{
+  background-color: #32ABEE !important;
+}
 </style>

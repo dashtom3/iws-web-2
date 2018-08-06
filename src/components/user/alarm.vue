@@ -2,7 +2,7 @@
   <div class="main">
     <div class="alarm-container">
       <div class="right-content">
-        <div style="height:100%">
+        <!-- <div style="height:100%"> -->
           <div class="right-btn">
             <el-tabs v-model="isRealAlarm" @tab-click="changeAlarmType" >
               <el-tab-pane label="实时报警" name="实时报警">实时报警</el-tab-pane>
@@ -30,9 +30,9 @@
                 @change="timeChange">
               </el-date-picker>
             </div>
-            <div class="right-export" v-if="isRealAlarm != '实时报警'">
+            <!-- <div class="right-export" v-if="isRealAlarm != '实时报警'">
               <el-button type="primary" size="small">导出excel</el-button>
-            </div>
+            </div> -->
             <div class="alarm-right-tab">
               <table v-if="isRealAlarm =='实时报警'">
                 <thead>
@@ -118,13 +118,14 @@
                   </tr>
                 </tbody>
               </table>
-              <div class="rig-pag" v-if="isRealAlarm != '实时报警'">
+              <div class="rig-pag" v-if="isRealAlarm != '实时报警'" >
                 <el-pagination
                   background
-                  layout="prev, pager, next"
+                  layout="total, prev, pager, next"
                   @current-change = "pageChange"
-                  :current-page="historyAlarmArgs.pageNum"
-                  :page-count="historyAlarmArgs.totalPage">
+                  :current-page.sync="historyAlarmArgs.pageNum"
+                  :page-count="historyAlarmArgs.totalPage"
+                >
                 </el-pagination>
               </div>
             </div>
@@ -164,7 +165,6 @@
             </div> -->
           </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -193,7 +193,7 @@ export default {
       historyAlarmArgs:{
         pageSize:30,
         pageNum:1,
-        totalPage:-1,
+        totalPage:1,
         isMe:"0"
       },
       timePicker:''
@@ -203,10 +203,12 @@ export default {
     this.getSystemList()
     // console.log(this.$global.getUser())
     this.getUserInfo()
+
   },
   methods: {
     getUserInfo(){
       this.userInfo = this.$global.getUser()
+      console.log(this.userInfo)
       this.getUserList()
     },
     // handleNodeClick(val){
@@ -233,14 +235,14 @@ export default {
     },
     getSystemList(){
       this.$global.httpGetWithToken(this,'system/system/all').then(res=>{
-        console.log(res)
+        // console.log(res)
         this.sysList = res.data.data
         this.analyseRegion()
         this.getRealAlarmData()
       })
     },
     taskChange(val) {
-      console.log(val)
+      // console.log(val)
       this.realAlarmArgs.isMe = val == "全部"? 0:1
       this.historyAlarmArgs.isMe = val == "全部"? 0:1
       if(this.isRealAlarm == this.alarmEnums[0]){
@@ -268,7 +270,7 @@ export default {
                 room.device.forEach(dev=>{
                   dev.sensor.forEach(sensor2=>{
                     if(sensor2._id == sensor._id){
-                      console.log(sensor)
+                      // console.log(sensor)
                       sensor.sysInfo = sys.name
                       sensor.locInfo = loc.name+':'+room.name
                       sensor.devInfo = dev.name
@@ -282,7 +284,7 @@ export default {
                         if(sensor.oldAlarmData.worker){
                           this.userList.forEach(item=>{
                             if(item._id == sensor.oldAlarmData.worker){
-                              console.log(item)
+                              // console.log(item)
                               sensor.workerEntity = item
                               sensor.workertemp = item._id
                             }
@@ -305,7 +307,7 @@ export default {
       if(item.workertemp != -1){
         const temp = this.isRealAlarm == this.alarmEnums[0] ? {userId:item.workertemp,dataId:item.alarmData._id} : {userId:item.workertemp,dataId:item.oldAlarmData._id}
         this.$global.httpGetWithToken(this,'work/changeWorker/'+item._id,temp).then(res=>{
-          console.log(res)
+          // console.log(res)
           this.$global.success(this,'修改成功')
           if(this.isRealAlarm == this.alarmEnums[0]){
             this.getRealAlarmData()
@@ -386,19 +388,13 @@ export default {
 .main {
   height: 100%;
 }
-.alarm-left{
+/* .alarm-left{
   border: 1px solid #cccccc;
   height: auto;
-  /* padding:5px; */
   float:left;
   width:15%;
-  /* margin-top: 10px; */
-  /* margin-left: 10px; */
-  /* border: 1px solid #cccccc; */
-  /* height: 850px; */
+
   overflow-y: scroll;
-  /* background-color: #32ABEE; */
-  /* background-color: #CCDDFF; */
   background-color: #283040;
   -ms-scroll-chaining: chained;
     -ms-overflow-style: none;
@@ -414,11 +410,7 @@ export default {
   background-color: #283040;
 }
 .el-tree {
-  /* background-color: #32ABEE; */
-  /* color:#fff; */
-  /* color:#303133; */
-  width: 100%;
-  /* border:1px solid #e6e6e6; */
+  width:100%;
 }
 .el-tree-node__content {
   border-bottom:1px solid #cccccc;
@@ -460,22 +452,23 @@ export default {
 .left::-webkit-scrollbar {
     width:0px;
     height:0px;
-}
+} */
 .alarm-container {
   height: 100%;
   text-align: left;
   float:left;
   width:100%;
-  background-color: #fff;
+  /* background-color: #fff; */
   position:relative;
-  padding:10px;
+  /* padding:10px; */
   padding-bottom: 0px;
 }
 .right-content {
-  /* background-color:#fff; */
+  background-color:#fff;
   padding:10px;
   /* border: 1px solid #e6e6e6; */
-  height: 100%;
+  min-height: 100%;
+  position:relative;
 }
 .right-tit {
   border-bottom:1px solid #e6e6e6;
@@ -497,6 +490,7 @@ export default {
   /* overflow-y: auto; */
   display:block;
   height: 70%;
+  margin-bottom: 50px;
 }
 .alarm-right-tab table,.alarm-right-tab table tr th,.alarm-right-tab table tr td { border:1px solid #0094ff; }
 .alarm-right-tab table {

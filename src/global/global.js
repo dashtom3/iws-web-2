@@ -1,7 +1,7 @@
 import axios from 'axios'
 export default{
-  // baseUrl: 'http://218.23.124.104:6784/',
-  baseUrl: 'http://localhost:6784/',
+  baseUrl: 'http://218.23.124.104:6784/',
+  // baseUrl: 'http://localhost:6784/',
   success (obj, msg, url) {
     obj.$message({
       message: msg,

@@ -89,6 +89,7 @@ export default {
       loading:false,
       basicData:null,
       ctx:null,
+      intervalp:null,
       image:[{src:"static/bengzu.png"},{src:"static/beng_new.png"},{src:"static/ra.png"}
     ,{src:"static/al.png"},{src:"static/b_y.png"},{src:"static/b_r.png"},{src:"static/b_g.png"},{src:"static/beng_s.png"},{src:"static/bengzu_ws.png"}],
         prop1Title:[['电机电压Ua','电机电压Ua'],['电机电压Ub','电机电压Ua'],['电机电压Uc','电机电压Uc'],
@@ -99,7 +100,7 @@ export default {
     }
   },
   created(){
-
+    clearInterval(this.intervalp)
   },
   mounted(){
     // this.promiseLoadImage()
@@ -148,6 +149,10 @@ export default {
           // this.$router.push({name:'user_canvas',params:{_id:val._id}})
         this.curRoom = val
         this.getRealData()
+        clearInterval(this.intervalp)
+        this.intervalp = setInterval(()=>{
+          this.getRealData()
+        },5000)
       }
     },
     getCurrentRoom(){
@@ -243,6 +248,9 @@ export default {
       }
       Promise.all(arrPromise).then(() => {
         this.getRealData()
+        this.intervalp = setInterval(()=>{
+          this.getRealData()
+        },5000)
       });
 
     },
@@ -263,9 +271,7 @@ export default {
             this.ctx = cvs.getContext('2d');
             this.ctx.clearRect(0,0,cvs.width,cvs.height);
             this.draw()
-            // setTimeout(()=>{
-            //   self.getRegionInfo(self.selectPlace)
-            // },5000)
+
           }
         })
       }).catch((item)=>{
@@ -311,7 +317,7 @@ export default {
 
       this.ctx.drawImage(this.image[8].data,100,55+(num+1)*195)
       //几区
-      this.drawText(key,1061,145+(num+1)*195,"black","18px")
+      this.drawText(key,1041,145+(num+1)*195,"black","18px")
 
       this.drawText("参数监控",1051,180+(num+1)*195,"black","14px")
       this.drawStrokeRect(1046,165+(num+1)*195,65,20,{color:"gray"})
@@ -358,7 +364,7 @@ export default {
       this.ctx.drawImage(this.image[0].data,420,55+(num-1)*195)
       //几区
 
-      this.drawText(key,1030,145+(num-1)*195,"black","18px")
+      this.drawText(key,1010,145+(num-1)*195,"black","18px")
 
 
       this.drawText(this.basicData[key]["泵后压力"],1025,85+(num-1)*195)
@@ -478,7 +484,7 @@ export default {
   height: auto;
   /* padding:5px; */
   float:left;
-  width:200px;
+  width:170px;
   /* margin-top: 10px; */
   /* margin-left: 10px; */
   /* border: 1px solid #cccccc; */
@@ -550,7 +556,7 @@ export default {
 }
 
 .canvas-content{
-  width: 1300px;
+  width: 1310px;
   /* width: 100%; */
   float: left;
   padding: 5px;
@@ -559,7 +565,7 @@ export default {
   background: url('/static/all.jpg') no-repeat;
 }
 .canvas-content-ws{
-  width: 1300px;
+  width: 1310px;
   float: left;
   padding: 5px;
   /* background-color: #CCDDFF; */
@@ -653,17 +659,6 @@ export default {
   margin-top: -425px;
   width: 390px;
   height:865px;
-}
-.video-top {
-  text-align: center;
-  height: 460px;
-  border: 1px solid #333333;
-}
-.video-bottom {
-  text-align: center;
-  /* height: 335px; */
-  border: 1px solid #333333;
-  margin-top: -1px;
 }
 #myCanvas{
   margin-top:-420px;

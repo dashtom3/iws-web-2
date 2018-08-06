@@ -20,7 +20,7 @@
           <div class="right-btn">
             <span class="demonstration">选择时间段：</span>
             <!-- {{timePicker}} -->
-            <el-date-picker
+            <!-- <el-date-picker
               v-model="timePicker"
               type="daterange"
               range-separator="至"
@@ -28,13 +28,19 @@
               end-placeholder="结束日期"
               value-format="yyyy-MM-dd"
               @change="timeChange">
+            </el-date-picker> -->
+            <el-date-picker
+              v-model="timePicker"
+              type="date"
+              value-format="yyyy-MM-dd"
+              placeholder="选择日期" @change="timeChange">
             </el-date-picker>
           </div>
-          <div class="right-export">
-            <el-button type="primary" size="small">导出excel</el-button>
-          </div>
+          <!-- <div class="right-export">
+            <el-button type="primary" size="small" @click="exportExcel">导出excel</el-button>
+          </div> -->
           <div class="right-tab">
-            <table v-if="sensorSel != -1">
+            <table v-if="sensorInfo != null">
               <thead>
                 <tr>
                   <td class="tab-head">时间</td>
@@ -86,7 +92,7 @@ export default {
       dataArgs:{
         pageSize:30,
         pageNum:1,
-        totalPage:-1,
+        totalPage:1,
       },
       timePicker:''
     }
@@ -94,10 +100,11 @@ export default {
   created(){
     this.setSysImg()
     this.getSystemList()
+    this.timePicker = this.$dtime().format('YYYY-MM-DD')
   },
   methods: {
     getSystemList(){
-      this.$global.httpGetWithToken(this,'system/system/all').then(res=>{
+      this.$global.httpGetWithToken(this,'system/system/allByRole').then(res=>{
         console.log(res)
         this.sysList = res.data.data
         this.analyseRegion()
@@ -109,16 +116,36 @@ export default {
         this.deviceSel = val
         if(this.deviceSel.sensor.length > 0) {
           this.getSensorData(this.deviceSel.sensor[0]._id,0)
+          this.sensorSel = 0
         }
       }
     },
-    getSensorData(_id,num){
+    exportExcel(){
+      const _id = this.deviceSel.sensor[this.sensorSel]._id
+      // this.sensorSel
       if(this.timePicker != ''){
-        this.dataArgs.fromDate = this.timePicker[0]
-        this.dataArgs.toDate = this.timePicker[1]
+        // this.dataArgs.fromDate = this.timePicker[0]
+        // this.dataArgs.toDate = this.timePicker[1]
+        this.dataArgs.toDate = this.$dtime(parseInt(this.$dtime(this.timePicker).format('x'))+1000*60*60*24).format('YYYY-MM-DD')
+        console.log(this.dataArgs.toDate)
+      }
+      this.$global.httpGetWithToken(this,'data/exportHistoryData/'+_id,this.dataArgs).then(res=>{
+        console.log(res)
+        // this.sensorSel = num
+        // this.sensorInfo = res.data.data
+        // this.dataArgs = res.data.page
+      })
+    },
+    getSensorData(_id,num){
+      console.log(this.timePicker,parseInt(this.$dtime(this.timePicker).format('x'))+1000*60*60*24)
+      if(this.timePicker != ''){
+        // this.dataArgs.fromDate = this.timePicker[0]
+        // this.dataArgs.toDate = this.timePicker[1]
+        this.dataArgs.toDate = this.$dtime(parseInt(this.$dtime(this.timePicker).format('x'))+1000*60*60*24).format('YYYY-MM-DD')
+        console.log(this.dataArgs.toDate)
       }
       this.$global.httpGetWithToken(this,'data/historyData/'+_id,this.dataArgs).then(res=>{
-        // console.log(res)
+        console.log(res)
         this.sensorSel = num
         this.sensorInfo = res.data.data
         this.dataArgs = res.data.page
@@ -139,11 +166,13 @@ export default {
     pageChange(val){
       console.log(val)
       this.dataArgs.pageNum = val;
+
       this.getSensorData(this.deviceSel.sensor[this.sensorSel]._id,this.sensorSel)
     },
     timeChange(val){
       console.log(val)
       this.dataArgs.pageNum = 1;
+      console.log(this.deviceSel,this.sensorSel)
       this.getSensorData(this.deviceSel.sensor[this.sensorSel]._id,this.sensorSel)
     },
     analyseRegion(){
@@ -260,7 +289,7 @@ export default {
   height: 100%;
   text-align: left;
   float:left;
-  width:85%;
+  width:83%;
   background-color: transparent;
   position:relative;
   padding:10px;
@@ -294,6 +323,37 @@ export default {
   /* position:absolute; */
   /* height: 70%; */
   margin-bottom: 10px;
+  -ms-scroll-chaining: chained;
+    -ms-overflow-style: none;
+    -ms-content-zooming: zoom;
+    -ms-scroll-rails: none;
+    -ms-content-zoom-limit-min: 100%;
+    -ms-content-zoom-limit-max: 500%;
+    -ms-scroll-snap-type: proximity;
+    -ms-scroll-snap-points-x: snapList(100%, 200%, 300%, 400%, 500%);
+    -ms-overflow-style: none;
+}
+.right-tab::-webkit-scrollbar-button    {
+    background-color:rgba(0,0,0,0);
+}
+.right-tab::-webkit-scrollbar-track     {
+    background-color:rgba(0,0,0,0);
+}
+.right-tab::-webkit-scrollbar-track-piece {
+    background-color:rgba(0,0,0,0);
+}
+.right-tab::-webkit-scrollbar-thumb{
+    background-color:rgba(0,0,0,0);
+}
+.right-tab::-webkit-scrollbar-corner {
+    background-color:rgba(0,0,0,0);
+}
+.right-tab::-webkit-scrollbar-resizer  {
+    background-color:rgba(0,0,0,0);
+}
+.right-tab::-webkit-scrollbar {
+    width:0px;
+    height:0px;
 }
 .right-tab table,.right-tab table tr th,.right-tab table tr td { border:1px solid #0094ff; }
 .right-tab table {
