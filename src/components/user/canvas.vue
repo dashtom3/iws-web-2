@@ -54,6 +54,7 @@
         :title="showParamKey+'参数监控'"
         :visible.sync="showParams"
         width="800px"
+        custom-class="dialog_diy"
         :before-close="paramClose">
         <div class="prop4">
           <div class="canvas-control" v-for="value,key in basicData[showParamKey]">
@@ -731,4 +732,16 @@ export default {
 .canvas-content  .el-table--border , .canvas-content-ws .el-table--border{
     border:1px solid #333333 !important;
   }
+  .dialog_diy{
+    max-height: 600px;
+    overflow: auto;
+  }
+  .el-dialog__header{
+    position: fixed;
+    width: 740px;
+    background: white;
+  }
+  .el-dialog__body {
+    padding: 80px 20px 30px 20px;
+}
 </style>
