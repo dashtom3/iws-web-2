@@ -110,8 +110,9 @@ export default {
     }
   },
   created(){
-    this.getUserList();
     this.getRoleList();
+
+
   },
   methods:{
     dialogUserDelete(item){
@@ -137,6 +138,7 @@ export default {
         console.log(res)
         this.roleList = res.data.data
         // this.args = res.data.data.page
+        this.getUserList();
       })
     },
     dialogAddUser(){

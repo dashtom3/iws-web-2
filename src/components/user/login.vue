@@ -135,18 +135,18 @@ export default {
 </script>
 
 <style>
-.el-form-item{
+.login .el-form-item{
     margin: 0;
 }
 .login{
     height: 100vh;
     text-align: left;
 }
-.el-form-item__label {
+.login .el-form-item__label {
   padding: 0px !important;
 }
 
-.loginCon{
+.login .loginCon{
   background: url('../../assets/loginbg.png') no-repeat;
   background-size: cover;
   padding-top: 50px;
@@ -154,10 +154,10 @@ export default {
   height: 100%;
   width: 100%;
 }
-.h75{
+.login .h75{
   height: 30px;
 }
-.loginMsg{
+.login .loginMsg{
   width: 500px;
   height: 600px;
   border-radius: 12px;
@@ -165,12 +165,12 @@ export default {
   opacity: 0.902;
   margin: 0 auto;
 }
-.w361{
+.login .w361{
   width: 361px;
   margin: 0px auto;
   padding-top: 50px;
 }
-.editloginMsg{
+.login .editloginMsg{
   width: 500px;
   height: 600px;
   border-radius: 12px;
@@ -179,46 +179,46 @@ export default {
   margin: 0 auto;
   padding: 0;
 }
-.editdialog{
+.login .editdialog{
   width: 361px;
   margin: 0px auto;
   padding-top: 50px
 }
-.msgTitle{
+.login .msgTitle{
   background: url('../../assets/loginTitle_03.png') no-repeat;
   width: 288px;
   height: 124px;
   margin: 0px auto;
 }
-.editlogo{
+.login .editlogo{
   background: url('../../assets/loginTitle_03.png') no-repeat;
   width: 288px;
   height: 124px;
   margin: 0px auto;
 }
-.w361>span{
+.login .w361>span{
   display: block;
   margin: 20px 0 10px;
   font-size: 14px;
 }
-.w361_1{
+.login .w361_1{
     float: left;
 }
-.goPhone{
+.login .goPhone{
   text-align: right;
 }
-.goRegister{
+.login .goRegister{
   text-align: right
 }
-.phoneLog{
+.login .phoneLog{
   margin-top: 20px;
   width: 100%;
   margin-left: 0;
 }
-phoneLogButton{
+.login phoneLogButton{
   width: 100%;
 }
-a{
+.login a{
   color:#000;
 }
 </style>

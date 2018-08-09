@@ -101,6 +101,7 @@
       </div>
     </el-dialog>
     <el-dialog title="确定删除该系统么？" :visible.sync="isSysDelete" class="sys-add">
+      <span style="color:red">删除系统前请关闭所有设备</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="isSysDelete = false">取 消</el-button>
         <el-button type="primary" @click="deleteSys">确 定</el-button>
@@ -166,6 +167,7 @@
       </div>
     </el-dialog>
     <el-dialog title="确定删除该地点么？" :visible.sync="isLocDelete" class="sys-add">
+      <span style="color:red">删除地点前请关闭所有设备</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="isLocDelete = false">取 消</el-button>
         <el-button type="primary" @click="deleteLoc">确 定</el-button>
@@ -195,6 +197,7 @@
       </div>
     </el-dialog>
     <el-dialog title="确定删除该泵房么？" :visible.sync="isRoomDelete" class="sys-add">
+      <span style="color:red">删除泵房前请关闭所有设备</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="isRoomDelete = false">取 消</el-button>
         <el-button type="primary" @click="deleteRoom">确 定</el-button>
@@ -295,6 +298,7 @@
       </div>
     </el-dialog>
     <el-dialog title="确定删除该设备么？" :visible.sync="isDeviceDelete" class="sys-add">
+      <span style="color:red">删除设备前请关闭该设备</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="isDeviceDelete = false">取 消</el-button>
         <el-button type="primary" @click="deleteDevice">确 定</el-button>

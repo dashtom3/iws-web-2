@@ -10,6 +10,7 @@ import admin_system from '@/components/admin/system.vue'
 import admin_point from '@/components/admin/point.vue'
 import admin_login from '@/components/admin/login.vue'
 import admin_sign from '@/components/admin/sign.vue'
+import admin_video from '@/components/admin/video.vue'
 
 
 import user from '@/components/user/index.vue'
@@ -60,6 +61,10 @@ export default new Router({
         path: '/admin/sign',
         name: 'admin_sign',
         component: admin_sign
+      },{
+        path: '/admin/video',
+        name: 'admin_video',
+        component: admin_video
       }]
     },
     {

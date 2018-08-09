@@ -37,7 +37,7 @@ export default {
   name: 'app',
   data () {
     return {
-      data:[['用户管理','admin_user'],['角色管理','admin_role'],['系统管理','admin_system'],['点表管理','admin_point'],['签到管理','admin_sign'],['跳转主页','user/main'],['历史数据','user/data'],['报警管理','user/alarm']],
+      data:[['用户管理','admin_user'],['角色管理','admin_role'],['系统管理','admin_system'],['点表管理','admin_point'],['签到管理','admin_sign'],['监控管理','admin_video'],['跳转主页','user/main'],['历史数据','user/data'],['报警管理','user/alarm']],
       title:0,
       user:null,
     }
@@ -69,7 +69,7 @@ export default {
     },
     clickDocker(val,index){
       console.log(val)
-      if(index >= 5){
+      if(index >= 6){
         window.open("/#/"+val[1],'_blank')
       } else {
         this.$router.push({name:val[1]})

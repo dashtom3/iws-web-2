@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading="loading" element-loading-text="数据加载中">
     <div class="data-left">
       <div class="leftTop">
         <!-- <el-input size="mini" placeholder="模糊查询" v-model="searchData">
@@ -20,7 +20,7 @@
           <div class="right-btn">
             <span class="demonstration">选择时间段：</span>
             <!-- {{timePicker}} -->
-            <!-- <el-date-picker
+            <el-date-picker
               v-model="timePicker"
               type="daterange"
               range-separator="至"
@@ -28,13 +28,13 @@
               end-placeholder="结束日期"
               value-format="yyyy-MM-dd"
               @change="timeChange">
-            </el-date-picker> -->
-            <el-date-picker
+            </el-date-picker>
+            <!-- <el-date-picker
               v-model="timePicker"
               type="date"
               value-format="yyyy-MM-dd"
               placeholder="选择日期" @change="timeChange">
-            </el-date-picker>
+            </el-date-picker> -->
           </div>
           <!-- <div class="right-export">
             <el-button type="primary" size="small" @click="exportExcel">导出excel</el-button>
@@ -94,13 +94,14 @@ export default {
         pageNum:1,
         totalPage:1,
       },
-      timePicker:''
+      loading:false,
+      timePicker:[]
     }
   },
   created(){
     this.setSysImg()
     this.getSystemList()
-    this.timePicker = this.$dtime().format('YYYY-MM-DD')
+    this.timePicker = [this.$dtime(new Date().getTime()-1000*60*60*24).format('YYYY-MM-DD'),this.$dtime().format('YYYY-MM-DD')]
   },
   methods: {
     getSystemList(){
@@ -137,18 +138,21 @@ export default {
       })
     },
     getSensorData(_id,num){
-      console.log(this.timePicker,parseInt(this.$dtime(this.timePicker).format('x'))+1000*60*60*24)
+      // console.log(this.timePicker,parseInt(this.$dtime(this.timePicker).format('x'))+1000*60*60*24)
       if(this.timePicker != ''){
-        // this.dataArgs.fromDate = this.timePicker[0]
-        // this.dataArgs.toDate = this.timePicker[1]
-        this.dataArgs.toDate = this.$dtime(parseInt(this.$dtime(this.timePicker).format('x'))+1000*60*60*24).format('YYYY-MM-DD')
+        this.dataArgs.fromDate = this.timePicker[0]
+        this.dataArgs.toDate = this.timePicker[1]
         console.log(this.dataArgs.toDate)
       }
+      this.loading = true
       this.$global.httpGetWithToken(this,'data/historyData/'+_id,this.dataArgs).then(res=>{
+        this.loading = false
         console.log(res)
         this.sensorSel = num
         this.sensorInfo = res.data.data
         this.dataArgs = res.data.page
+      }).catch(()=>{
+        this.loading = false
       })
     },
     //系统

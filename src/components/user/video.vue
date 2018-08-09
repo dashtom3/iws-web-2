@@ -69,11 +69,11 @@ export default {
         })
       })
     },
-    getVideoList(){
+    getUserInfo(){
       if(this.allVideoList == null) {
-        this.$global.httpGetWithToken(this,'video/all').then(res=>{
+        this.$global.httpGetWithToken(this,'user/info').then(res=>{
           console.log(res)
-          this.allVideoList = res.data.list
+          this.allVideoList = res.data.role.video
           this.setVideoCheckBox()
           this.isVideoEdit = !this.isVideoEdit
         })
@@ -95,7 +95,7 @@ export default {
       }
     },
     dialogEditVideo(){
-      this.getVideoList()
+      this.getUserInfo()
     },
     editVideo(){
       this.videoEntity = []

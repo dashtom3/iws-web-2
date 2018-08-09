@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="alarm-container">
-      <div class="right-content">
+      <div class="right-content" v-loading="loading" element-loading-text="导出excel中">
         <!-- <div style="height:100%"> -->
           <div class="right-btn">
             <el-tabs v-model="isRealAlarm" @tab-click="changeAlarmType" >
@@ -18,6 +18,20 @@
                 <el-radio-button label="我的任务" name="1"></el-radio-button>
               </el-radio-group>
             </div>
+            <div class="right-btn" v-if="userInfo.role.type == 1 && isRealAlarm == '实时报警'">
+              <span> 人员检索：</span>
+              <el-select v-model="realAlarmArgs._id"  size="mini" @change="changePeople()">
+                <el-option label="暂无" :value=null key="-1"></el-option>
+                <el-option :label="user.realName+':'+user.phone" :value="user._id" :key="user._id" v-for="user in userList"></el-option>
+              </el-select>
+            </div>
+            <div class="right-btn" v-if="userInfo.role.type == 1 && isRealAlarm != '实时报警'">
+              <span> 人员检索：</span>
+              <el-select v-model="historyAlarmArgs._id"  size="mini" @change="changePeople2()">
+                <el-option label="暂无" :value=null key="-1"></el-option>
+                <el-option :label="user.realName+':'+user.phone" :value="user._id" :key="user._id" v-for="user in userList"></el-option>
+              </el-select>
+            </div>
             <div class="right-btn" v-if="isRealAlarm != '实时报警'">
               <span class="demonstration">选择时间段：</span>
               <el-date-picker
@@ -30,9 +44,9 @@
                 @change="timeChange">
               </el-date-picker>
             </div>
-            <!-- <div class="right-export" v-if="isRealAlarm != '实时报警'">
-              <el-button type="primary" size="small">导出excel</el-button>
-            </div> -->
+            <div class="right-export" v-if="isRealAlarm != '实时报警' && userInfo.role.type == 1">
+              <el-button type="primary" size="small" @click="exportData">导出excel</el-button>
+            </div>
             <div class="alarm-right-tab">
               <table v-if="isRealAlarm =='实时报警'">
                 <thead>
@@ -64,7 +78,7 @@
                       <td style="width:100px;padding:5px;">
                         <el-select v-model="item.workertemp"  size="mini" @change="changeWorker(item)">
                           <el-option label="暂无" :value="-1" key="-1"></el-option>
-                          <el-option :label="user.realName+':'+user.phone" :value="user._id" :key="user._id" v-for="user in userList"></el-option>
+                          <el-option :label="user.realName+':'+user.phone" :value="user._id" :key="user._id" v-for="user in userList" v-if="isUserShow(user,item)"></el-option>
                         </el-select>
                       </td>
                     </template>
@@ -179,6 +193,7 @@ export default {
         children: 'children',
         label: 'name'
       },
+      loading:false,
       userInfo:null,
       isRealAlarm: "实时报警",
       alarmEnums:['实时报警','历史报警'],
@@ -188,7 +203,10 @@ export default {
       // hisAlarmList:null,
       realAlarmArgs:{
         isMe:"0",
+        //TODO 人员id检索
+        _id:null,
       },
+
       userList:null,
       historyAlarmArgs:{
         pageSize:30,
@@ -219,16 +237,38 @@ export default {
     //     }
     //   }
     // },
+    isUserShow(user,alarmItem){
+      // console.log(user,alarmItem)
+      var temp = false
+      if(user.role.type == 1){
+        return false
+      }
+      user.role.location.forEach(loc=>{
+        if(loc+"" == alarmItem.locId+"") {
+          temp = true
+        }
+      })
+      return temp;
+    },
     changeAlarmType(){
-      console.log(this.isRealAlarm)
+      // console.log(this.isRealAlarm)
+      this.realAlarmList=[]
       if(this.isRealAlarm == this.alarmEnums[0]){
+
         this.getRealAlarmData()
       }else {
         this.getHistoryAlarmData()
       }
     },
+    changePeople(){
+      this.getRealAlarmData()
+    },
+    changePeople2(){
+      this.historyAlarmArgs.pageNum = 1
+      this.getHistoryAlarmData()
+    },
     getUserList(){
-      this.$global.httpGetWithToken(this,'user/all',{pageNum:1,pageSize:100000}).then(res=>{
+      this.$global.httpGetWithToken(this,'user/all',{pageNum:1,pageSize:100000,hasRole:1,isDelete:1}).then(res=>{
         console.log(res)
         this.userList = res.data.data
       })
@@ -246,17 +286,32 @@ export default {
       this.realAlarmArgs.isMe = val == "全部"? 0:1
       this.historyAlarmArgs.isMe = val == "全部"? 0:1
       if(this.isRealAlarm == this.alarmEnums[0]){
+
         this.getRealAlarmData()
       }else {
         this.getHistoryAlarmData()
       }
 
     },
+    exportData(){
+      // this.exportVisible = true
+      this.loading = true
+      this.$global.httpGetWithToken(this,'data/exportHistoryAlarmData',this.historyAlarmArgs).then(res=>{
+        this.loading = false
+        // console.log(res)
+        if(res.src){
+          window.open(this.$global.baseUrl+'file/excel/'+res.src)
+        }
+        // this.signList = res.data.data
+      }).catch(()=>{
+        this.loading = false
+      })
+    },
     getRealAlarmData(){
-      this.realAlarmList = []
+
       this.$global.httpGetWithToken(this,'data/realAlarmData',this.realAlarmArgs).then(res=>{
         console.log(res)
-        this.realAlarmData = []
+        this.realAlarmList = []
         this.realAlarmList = res.data
         this.analyseSensor()
       })
@@ -273,6 +328,7 @@ export default {
                       // console.log(sensor)
                       sensor.sysInfo = sys.name
                       sensor.locInfo = loc.name+':'+room.name
+                      sensor.locId = loc._id
                       sensor.devInfo = dev.name
                       if(this.isRealAlarm == this.alarmEnums[0]){
                         if(sensor.alarmData.worker){
@@ -352,6 +408,7 @@ export default {
     },
     timeChange(val){
       console.log(val)
+      this.historyAlarmArgs.pageNum = 1
       this.getHistoryAlarmData()
     },
     analyseRegion(){

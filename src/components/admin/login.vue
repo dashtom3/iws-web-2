@@ -1,5 +1,5 @@
 <template>
-  <div class="login">
+  <div class="ad-login">
     <div class="loginCon" ref="contentHeight">
       <div class="h75">
 
@@ -116,28 +116,28 @@ export default {
 </script>
 
 <style scoped>
-.el-form-item{
+.ad-login .el-form-item{
     margin: 0;
 }
-.login{
+.ad-login{
     height: 100vh;
     text-align: left;
 }
-.el-form-item__label {
+.ad-login .el-form-item__label {
   padding: 0px !important;
 }
 
-.loginCon{
+.ad-login .loginCon{
   background-color: #3488FF;
   padding-top: 50px;
   /* padding-bottom: 20px; */
   height: 100%;
   width: 100%;
 }
-.h75{
+.ad-login .h75{
   height: 30px;
 }
-.loginMsg{
+.ad-login .loginMsg{
   width: 500px;
   height: 500px;
   border-radius: 12px;
@@ -145,12 +145,12 @@ export default {
   opacity: 0.902;
   margin: 0 auto;
 }
-.w361{
+.ad-login .w361{
   width: 361px;
   margin: 0px auto;
   padding-top: 50px;
 }
-.editloginMsg{
+.ad-login .editloginMsg{
   width: 500px;
   height: 600px;
   border-radius: 12px;
@@ -159,49 +159,49 @@ export default {
   margin: 0 auto;
   padding: 0;
 }
-.editdialog{
+.ad-login .editdialog{
   width: 361px;
   margin: 0px auto;
   padding-top: 50px
 }
-.msgTitle{
+.ad-login .msgTitle{
   /* background: url('../../assets/loginTitle_03.png') no-repeat; */
   width: 288px;
   height: 60px;
   margin: 0px auto;
   text-align: center;
 }
-.editlogo{
+.ad-login .editlogo{
   background: url('../../assets/loginTitle_03.png') no-repeat;
   width: 288px;
   height: 124px;
   margin: 0px auto;
 }
 
-.w361_1{
+.ad-login .w361_1{
     float: left;
     display: block;
     margin: 20px 0 10px;
     font-size: 14px;
 }
-.goPhone{
+.ad-login .goPhone{
   text-align: right;
 }
-.goRegister{
+.ad-login .goRegister{
   text-align: right
 }
-.phoneLog{
+.ad-login .phoneLog{
   margin-top: 20px;
   width: 100%;
   margin-left: 0;
 }
-phoneLogButton{
+.ad-login phoneLogButton{
   width: 100%;
 }
-a{
+.ad-login a{
   color:#000;
 }
-.login-btn {
+.ad-login .login-btn {
   margin-top: 30px;
 }
 </style>

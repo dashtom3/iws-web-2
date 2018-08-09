@@ -256,6 +256,9 @@ export default {
       this.$global.httpGetWithToken(this,'sensor/point/all').then(res=>{
         console.log(res)
         this.pointList = res.data.data
+        this.isPointAdd = false
+        this.isPointUpdate = false
+        this.isPointDelete = false
       })
     },
     //TODO pointAdd 里面的alarm 记得要去掉id，要么就默认给加上了。
@@ -297,7 +300,7 @@ export default {
       console.log(this.pointAdd)
       this.$global.httpPostWithToken(this,'sensor/point/add',this.pointAdd).then((res)=>{
         this.$global.success(this,'添加成功','')
-        this.isPointAdd = !this.isPointAdd
+        // this.isPointAdd = !this.isPointAdd
         this.getPointList();
       })
     },
@@ -313,14 +316,14 @@ export default {
       // console.log(this.pointUpdate)
       this.$global.httpPostWithToken(this,'sensor/point/update',this.pointUpdate).then((res)=>{
         this.$global.success(this,'修改成功','')
-        this.isPointUpdate = !this.isPointUpdate
+        // this.isPointUpdate = !this.isPointUpdate
         this.getPointList();
       })
     },
     deletePoint(){
       this.$global.httpGetWithToken(this,'sensor/point/delete/'+this.pointDelete._id).then((res)=>{
         this.$global.success(this,'删除成功','')
-        this.isPointDelete = !this.isPointDelete
+        // this.isPointDelete = !this.isPointDelete
         this.getPointList();
       })
     }
